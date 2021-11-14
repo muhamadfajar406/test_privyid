@@ -1,4 +1,57 @@
 package starter.account;
 
+import io.restassured.RestAssured;
+import net.serenitybdd.rest.SerenityRest;
+import net.thucydides.core.annotations.Step;
+import org.json.simple.JSONObject;
+import starter.utils.Endpoint;
+
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+
 public class login {
+    Endpoint endpoint = new Endpoint();
+    JSONObject requestParams;
+
+    @Step
+    public void setBodyReq() {
+        requestParams = new JSONObject();
+        requestParams.put("userName", "adm78n6");
+        requestParams.put("password", "Berak@89");
+//       {
+//           "userName" : "",
+//           "password" : ""
+//       }
+    }
+
+    @Step
+    public void hitEndpointLogin()
+    {
+        SerenityRest
+                .given()
+                    .header("Content-Type", "application/json")
+                    .body(requestParams.toString())
+                .when()
+                    .post(endpoint.LOGIN)
+                .then()
+                    .statusCode(201);
+    }
+
+    @Step
+    public void hitEndpointLoginRA() {
+        RestAssured
+                .given()
+                .header("Content-Type", "application/json")
+                .body(requestParams.toString())
+                .when()
+                .post(endpoint.LOGIN)
+                .then()
+                .statusCode(201);
+    }
+
+    @Step
+    public void valDateEndpointLogin() {
+        SerenityRest
+                .then()
+                .body(matchesJsonSchemaInClasspath("JSONSchema/login.json"));
+    }
 }
