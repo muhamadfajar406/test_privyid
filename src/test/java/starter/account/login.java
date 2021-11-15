@@ -12,15 +12,17 @@ public class login {
     Endpoint endpoint = new Endpoint();
     JSONObject requestParams;
 
+
+
+
+
+
     @Step
     public void setBodyReq() {
         requestParams = new JSONObject();
-        requestParams.put("userName", "adm78n6");
-        requestParams.put("password", "Berak@89");
-//       {
-//           "userName" : "",
-//           "password" : ""
-//       }
+        requestParams.put("userName", "muhamadfajar"+endpoint.huruf+endpoint.huruf2);
+        requestParams.put("password", "Bismilah@3"+endpoint.huruf+endpoint.huruf2);
+
     }
 
     @Step
