@@ -1,6 +1,5 @@
-package starter.account;
+package starter.account.javaclass;
 
-import io.restassured.RestAssured;
 import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Step;
 import org.json.simple.JSONObject;
@@ -8,20 +7,20 @@ import starter.utils.Endpoint;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
-public class login {
+public class Signinjava {
+
     Endpoint endpoint = new Endpoint();
     JSONObject requestParams;
-
-
-
-
 
 
     @Step
     public void setBodyReq() {
         requestParams = new JSONObject();
-        requestParams.put("userName", "muhamadfajar"+endpoint.huruf+endpoint.huruf2);
-        requestParams.put("password", "Bismilah@3"+endpoint.huruf+endpoint.huruf2);
+        requestParams.put("phone", "089652438891");
+        requestParams.put("password", "fajar406");
+        requestParams.put("latlong", "98765678");
+        requestParams.put("device_token", "88765678");
+        requestParams.put("device_type", "0");
 
     }
 
@@ -30,22 +29,10 @@ public class login {
     {
         SerenityRest
                 .given()
-                    .header("Content-Type", "application/json")
-                    .body(requestParams.toString())
-                .when()
-                    .post(endpoint.LOGIN)
-                .then()
-                    .statusCode(201);
-    }
-
-    @Step
-    public void hitEndpointLoginRA() {
-        RestAssured
-                .given()
                 .header("Content-Type", "application/json")
                 .body(requestParams.toString())
                 .when()
-                .post(endpoint.LOGIN)
+                .post(endpoint.signin)
                 .then()
                 .statusCode(201);
     }
@@ -54,6 +41,8 @@ public class login {
     public void valDateEndpointLogin() {
         SerenityRest
                 .then()
-                .body(matchesJsonSchemaInClasspath("JSONSchema/login.json"));
+                .body(matchesJsonSchemaInClasspath("JSONSchema/sign.json"));
     }
+
+
 }
